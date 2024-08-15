@@ -4,13 +4,13 @@ import React from 'react'
 import { Photo } from './photo';
 
 export const LoadMorePhotos = () => {
-  const [ start, setStart ] = React.useState<number>(5);
+  const [ start, setStart ] = React.useState<number>(16);
   const [ photos, setPhotos ] = React.useState<PhotoType[]>([]);
 
   const onLoadMoreClick = async () => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/photos?_start=${start}&_limit=5`);
+    const response = await fetch(`https://jsonplaceholder.typicode.com/photos?_start=${start}&_limit=16`);
     const data: PhotoType[] = await response.json();
-    setStart(start + 5);
+    setStart(start + 16);
     setPhotos([...photos, ...data]);
   }
 

@@ -9,18 +9,22 @@ type PhotoProps = {
 
 export const Photo: React.FC<PhotoProps> = ({ photoBody }) => {
   return (
-    <div className="photo">
-      <h2>Photo with id: {photoBody.id}</h2>
-      <h3>{photoBody.title}</h3>
-      <Link href={`/photos/${photoBody.id}`}>
-        <Image
-          src={photoBody.thumbnailUrl} 
-          alt={photoBody.title}
-          width={150}
-          height={150}
-          priority={true}
-        />
-      </Link>
+    <div className="photo-card">
+      <div className="photo-card__container">
+        <Link href={`/photos/${photoBody.id}`}>
+          <h2>Photo with id: {photoBody.id}</h2>
+        </Link>
+        <h3>{photoBody.title}</h3>
+        <Link href={`/photos/${photoBody.id}`}>
+          <Image
+            src={photoBody.thumbnailUrl} 
+            alt={photoBody.title}
+            width={150}
+            height={150}
+            priority={true}
+          />
+        </Link>
+      </div>
     </div>
   )
 }
