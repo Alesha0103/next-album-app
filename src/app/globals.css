@@ -2,32 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*{
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.app-container {
+  width: 1280px;
+  margin: auto;
+  border-left: 3px solid #b02c15;
+  border-right: 3px solid #b02c15;
+  position: relative;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.album-app_wrapp {
+  position: absolute;
+  width: 100%;
+  top: 35vh;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.album-app__title {
+  font-weight: 800;
+  color: #b02c15;
+  display: block;
+  text-align: center;
+}
+
+.album-app__button {
+  display: block;
+  color: white;
+  background-color: #b02c15;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  margin: auto;
+  margin-top: 30px;
 }
