@@ -1,10 +1,23 @@
 .photos-header {
-  font-weight: 800;
-  color: #b02c15;
   display: block;
-  text-align: center;
-  border-bottom: 3px solid #b02c15;
-  padding: 15px;
+  font-weight: 700;
+  color: white;
+  width: 100%;
+  position: relative;
+
+  .photos-header__container {
+    position: sticky;
+
+    text-align: center;
+    background-color: #b02c15;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 }
 
 .photo-card {
@@ -68,4 +81,40 @@
   img {
     margin: auto;
   }
+}
+
+.arrow {
+  position: relative;
+  align-self: center;
+  &:hover {
+    .arrow__body {
+      background-color: #781010;
+    }
+    .arrow__arrow {
+      border-right-color: #781010;
+    }
+  }
+  cursor: pointer;
+  .arrow__body {
+    width: 40px;
+    height: 20px;
+    background-color: #ff4b4b;
+  }
+  .arrow__arrow {
+    border-left: 15px solid transparent;
+    border-right: 20px solid #ff4b4b;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    left: -30px;
+    top: -5px;
+  }
+}
+
+.arrow__rotated {
+  transform: rotate(180deg);
+}
+
+.arrow__disabled {
+  cursor: default;
 }

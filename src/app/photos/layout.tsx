@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import "./style.scss";
+import { Header } from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Photos",
@@ -11,7 +12,7 @@ export default function PhotosLayout(props: {
 }) {
   return (
     <>
-      <h1 className="photos-header">My Album</h1>
+      <Header/>
       {props.children}
     </>
   );
