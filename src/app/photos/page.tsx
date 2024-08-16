@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-const PhotosListDefault = () => {
+const PhotosListDefault = async () => {
   redirect("/photos/1");
 }
 
