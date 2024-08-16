@@ -15,7 +15,7 @@ export const Photo: React.FC<PhotoProps> = ({ photoBody }) => {
           <h2>Photo with id: {photoBody.id}</h2>
         </Link>
         <h3>{photoBody.title}</h3>
-        <Link href={`/photos/${photoBody.id}`}>
+        <Link href={`/details/${photoBody.id}`}>
           <Image
             src={photoBody.thumbnailUrl} 
             alt={photoBody.title}
