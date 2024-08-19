@@ -8,25 +8,21 @@ export const PageNavigation = () => {
   const router = useRouter();
   const params = useParams();
 
-  const [ pages, setPages ] = React.useState([ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+  const [ pages, setPages ] = React.useState<number[]>([]);
   const [ leftArrowExist, setLeftArrow ] = React.useState(false);
   const [ leftEllipsisExist, setLeftEllipsis ] = React.useState(false);
 
   const paramId = params.id;
 
-  // const setPagesList = (decrement?: boolean) => () => {
-  //   let newPages = [ ...pages ];
-
-  //   newPages = decrement
-  //     ? newPages.map(page => page - INCREMENT)
-  //     : newPages.map(page => page + INCREMENT);
-
-  //   router.push(`/photos/${newPages[0]}`);
-  // }
-
   React.useEffect(() => {
-    !!pages.includes(1) ? setLeftEllipsis(false) : setLeftEllipsis(true);
-    paramId === "1" ? setLeftArrow(false): setLeftArrow(true);
+    let updatedPages: number[] = checkAndUpdatePagesList(pages, Number(paramId));
+    
+    if (!updatedPages.every(page => pages.includes(page))) {
+      setPages(updatedPages);
+    }
+
+    Number(paramId) < 10 ? setLeftEllipsis(false) : setLeftEllipsis(true);
+    paramId === "1" ? setLeftArrow(false) : setLeftArrow(true);
 
   }, [paramId])
 
@@ -37,6 +33,12 @@ export const PageNavigation = () => {
 
   const onPageClick = (id: number) => () => {
     router.push(`/photos/${id}`);
+  }
+
+  const onEllipsisClick = (decrement?: boolean) => () => {
+    decrement
+      ? router.push(`/photos/${Number(pages[0]) - INCREMENT}`)
+      : router.push(`/photos/${Number(pages[pages.length-1]) + 1}`)
   }
 
   return (
@@ -50,10 +52,10 @@ export const PageNavigation = () => {
       {leftEllipsisExist && (
         <span
           className="page-navigation__page"
-          // onClick={setPagesList(true)}
+          onClick={onEllipsisClick(true)}
         >...</span>
       )}
-      {pages.map((page: number, index) => {
+      {pages?.map((page: number, index) => {
         return (
           <span
             key={page+index}
@@ -68,7 +70,7 @@ export const PageNavigation = () => {
       })}
       <span
         className="page-navigation__page"
-        // onClick={setPagesList()}
+        onClick={onEllipsisClick()}
       >...</span>
       <div
         className="page-navigation__right-arrow"
