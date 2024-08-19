@@ -19,12 +19,12 @@ export const Arrow: React.FC<ArrowProps> = ({ rotate }) => {
   React.useEffect(() => {
     detailsPage && rotate ? hideArrow(true) : hideArrow(false); 
 
-    if ( !rotate && params.id === "1") {
+    if ( !detailsPage && !rotate && params.id === "1") {
       disableArrow(true);
     }
     if (params.id === "0") {
       redirect("/photos/1");
-    } else if (params.id !== "0" && params.id !== "1") {
+    } else if (!detailsPage && params.id !== "0" && params.id !== "1") {
       disableArrow(false);
     }
   }, [params.id])

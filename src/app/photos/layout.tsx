@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Header } from "@/components/header";
+import { PageNavigation } from "@/components/page-navigation";
 
 export const metadata: Metadata = {
   title: "Photos",
@@ -13,6 +14,7 @@ export default function PhotosLayout(props: {
     <>
       <Header/>
       {props.children}
+      <PageNavigation/>
     </>
   );
 }
