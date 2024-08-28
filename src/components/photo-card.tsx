@@ -2,12 +2,13 @@ import React from "react";
 import Image from "next/image";
 import { PhotoType } from "@/models/photos";
 import Link from "next/link";
+import { ImgWrapp } from "./img-wrapp";
 
 type PhotoProps = {
   photoBody: PhotoType
 }
 
-export const Photo: React.FC<PhotoProps> = ({ photoBody }) => {
+export const PhotoCard: React.FC<PhotoProps> = ({ photoBody }) => {
   return (
     <div className="photo-card">
       <div className="photo-card__container">
@@ -16,13 +17,7 @@ export const Photo: React.FC<PhotoProps> = ({ photoBody }) => {
         </Link>
         <h3>{photoBody.title}</h3>
         <Link href={`/details/${photoBody.id}`}>
-          <Image
-            src={photoBody.thumbnailUrl} 
-            alt={photoBody.title}
-            width={150}
-            height={150}
-            priority={true}
-          />
+          <ImgWrapp alt={photoBody.title} url={photoBody.thumbnailUrl} width={150} height={150}/>
         </Link>
       </div>
     </div>

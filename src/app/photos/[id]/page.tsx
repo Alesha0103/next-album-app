@@ -1,6 +1,6 @@
 import { PhotoType } from "@/models/photos";
 
-import { Photo } from "@/components/photo";
+import { PhotoCard } from "@/components/photo-card";
 import NotFound from "@/app/not-found";
 
 const PhotosList = async ({
@@ -25,7 +25,7 @@ const PhotosList = async ({
       <div className="photo-page__list">
         {photos.map((photo: PhotoType) => {
           return (
-            <Photo
+            <PhotoCard
               key={photo.id+photo.albumId}
               photoBody={photo}
             />

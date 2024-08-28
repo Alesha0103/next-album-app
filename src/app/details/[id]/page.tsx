@@ -2,6 +2,7 @@ import { PhotoType } from "@/models/photos";
 import Image from "next/image";
 
 import NotFound from "@/app/not-found";
+import { ImgWrapp } from "@/components/img-wrapp";
 
 const DetailsPage = async ({
   params: { id },
@@ -24,13 +25,7 @@ const DetailsPage = async ({
       <h3>
         {photo.title}
       </h3>
-      <Image
-          src={photo.thumbnailUrl} 
-          alt={photo.title}
-          width={350}
-          height={350}
-          priority={true}
-      />
+      <ImgWrapp alt={photo.title} url={photo.url}/>
     </div>
   );
 }
