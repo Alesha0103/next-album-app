@@ -1,0 +1,21 @@
+.headerContainer {
+  display: block;
+  font-weight: 700;
+  color: white;
+  width: 100%;
+  position: relative;
+
+  .header {
+    position: sticky;
+
+    text-align: center;
+    background-color: #b02c15;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}

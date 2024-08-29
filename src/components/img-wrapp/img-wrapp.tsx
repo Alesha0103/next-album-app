@@ -2,7 +2,7 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import { Loader } from "../loader/loader";
-import NoImage from "../../public/no-img.png";
+import NoImage from "../../../public/no-img.png";
 
 interface ImgProps {
   alt: string,

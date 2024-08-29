@@ -1,7 +1,9 @@
 import { PhotoType } from "@/models/photos";
 
-import { PhotoCard } from "@/components/photo-card";
 import NotFound from "@/app/not-found";
+import { PhotoCard } from "@/components/photo-card/photo-card";
+
+import styles from "../photos.module.scss";
 
 const PhotosList = async ({
   params: { id },
@@ -21,8 +23,8 @@ const PhotosList = async ({
   const photos: PhotoType[] = await response.json();
 
   return (
-    <div className="photo-page">
-      <div className="photo-page__list">
+    <div>
+      <div className={styles.photoPageList}>
         {photos.map((photo: PhotoType) => {
           return (
             <PhotoCard

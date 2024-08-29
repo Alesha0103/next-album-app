@@ -1,0 +1,33 @@
+.photoCardContainer {
+  position: relative;
+  border: 3px solid #0000ff;
+  border-radius: 5px;
+  width: 250px;
+  height: 300px;
+  .photoCard {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+
+    display: grid;
+    grid-template-rows: 40px 70px 160px;
+  
+    h2 {
+      color: red;
+      text-align: center;
+      font-weight: 600;
+    }
+    h3 {
+      overflow: hidden;
+      padding: 5px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+
+    }
+    img {
+      margin: auto;
+      margin-top: 10px;
+    }
+  }
+}

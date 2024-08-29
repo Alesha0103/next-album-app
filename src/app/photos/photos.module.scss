@@ -1,0 +1,8 @@
+.photoPageList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 45px;
+  width: fit-content;
+  margin: auto;
+  padding: 25px 0;
+}

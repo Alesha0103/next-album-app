@@ -2,6 +2,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
+import styles from "./modal.module.scss";
+
 export const Modal = ({ children }: { children: React.ReactNode }) => {
   const overlay = React.useRef(null);
   const wrapper = React.useRef(null);
@@ -35,12 +37,12 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       ref={overlay}
-      className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60 p-10"
+      className={styles.overlay}
       onClick={onClick}
     >
       <div
         ref={wrapper}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        className={styles.wrapper}
       >
         {children}
       </div>

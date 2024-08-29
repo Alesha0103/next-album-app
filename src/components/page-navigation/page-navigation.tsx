@@ -4,6 +4,8 @@ import { useRouter, useParams } from "next/navigation";
 import classNames from "classnames";
 import { checkAndUpdatePagesList, INCREMENT } from "@/helpers/check-and-update-pages-list";
 
+import styles from "./page-navigation.module.scss";
+
 export const PageNavigation = () => {
   const router = useRouter();
   const params = useParams();
@@ -42,16 +44,16 @@ export const PageNavigation = () => {
   }
 
   return (
-    <div className="page-navigation">
+    <div className={styles.pageNavigation}>
       {leftArrowExist && (
         <div
-          className="page-navigation__left-arrow"
+          className={styles.leftArrow}
           onClick={onArrowClick(true)}
         />
       )}
       {leftEllipsisExist && (
         <span
-          className="page-navigation__page"
+          className={styles.pageIndicator}
           onClick={onEllipsisClick(true)}
         >...</span>
       )}
@@ -59,8 +61,8 @@ export const PageNavigation = () => {
         return (
           <span
             key={page+index}
-            className={classNames("page-navigation__page", {
-              "page-navigation__current-page": page === Number(paramId),
+            className={classNames(styles.pageIndicator, {
+              [styles.currentPage]: page === Number(paramId),
             })}
             onClick={onPageClick(page)}
           >
@@ -69,11 +71,11 @@ export const PageNavigation = () => {
         );
       })}
       <span
-        className="page-navigation__page"
+        className={styles.pageIndicator}
         onClick={onEllipsisClick()}
       >...</span>
       <div
-        className="page-navigation__right-arrow"
+        className={styles.rightArrow}
         onClick={onArrowClick()}
       />
     </div>

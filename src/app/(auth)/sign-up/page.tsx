@@ -6,6 +6,8 @@ import { AuthForm, AuthFormField } from "@/models/auth-form";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader } from "@/components/loader/loader";
 
+import styles from "../auth.module.scss";
+
 const SignUp = () => {
   const [form, setForm] = React.useState<AuthForm>({
     [AuthFormField.NAME]: "",
@@ -59,7 +61,7 @@ const SignUp = () => {
 
   return (
     <Modal>
-      <div className="auth">
+      <div className={styles.auth}>
         <h1>Please Sign Up</h1>
         <Input
           ref={inputNameRef}
@@ -94,12 +96,12 @@ const SignUp = () => {
           error={!secondPasswordValid}
         />
 
-        <div className="auth-buttons">
-          {!submitButtonLoader ? (
+        <div className={styles.authButtons}>
+          {submitButtonLoader ? (
             <Loader/>
             ) : (
             <button
-              className="auth-buttons__submit"
+              className={styles.authButtonSubmit}
               onClick={submitForm}
               disabled={disabledSubmit}
             >
@@ -107,7 +109,7 @@ const SignUp = () => {
             </button>
           )}
           <span>or</span>
-          <button className="auth-buttons__signin">Sign In</button>
+          <button className={styles.authButtonSignin}>Sign In</button>
         </div>
       </div>
     </Modal>

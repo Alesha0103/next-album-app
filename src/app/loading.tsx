@@ -1,7 +1,9 @@
+import styles from './globals.module.scss';
+
 const LoadingPage = () => {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#ff4b4b]"></div>
+    <div className={styles.spinnerContainer}>
+      <div className={styles.spinner}></div>
     </div>
   );
 }

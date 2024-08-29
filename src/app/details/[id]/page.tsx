@@ -1,8 +1,8 @@
 import { PhotoType } from "@/models/photos";
-import Image from "next/image";
-
 import NotFound from "@/app/not-found";
-import { ImgWrapp } from "@/components/img-wrapp";
+import { ImgWrapp } from "@/components/img-wrapp/img-wrapp";
+
+import styles from "../details.module.scss";
 
 const DetailsPage = async ({
   params: { id },
@@ -18,7 +18,7 @@ const DetailsPage = async ({
   }
 
   return (
-    <div className="details-page">
+    <div className={styles.detailsPage}>
       <h2>
         My photo with id: {id}
       </h2>

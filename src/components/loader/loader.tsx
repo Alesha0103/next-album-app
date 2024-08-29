@@ -4,7 +4,7 @@ import styles from "./loader.module.scss";
 
 export const Loader = () => {
   return (
-    <div className="flex items-center justify-center">
+    <div className={styles.loaderContainer}>
       <div className={styles.loader}></div>
     </div>
   );

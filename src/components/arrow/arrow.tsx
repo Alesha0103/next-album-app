@@ -1,7 +1,9 @@
 "use client"
 import React from "react"
 import { useRouter, useParams, usePathname , redirect } from "next/navigation"
-import classNames from "classnames"
+import classNames from "classnames";
+
+import styles from "./arrow.module.scss"
 
 type ArrowProps = {
   rotate?: boolean
@@ -41,15 +43,15 @@ export const Arrow: React.FC<ArrowProps> = ({ rotate }) => {
 
   return (
     <div
-      className={classNames("arrow", {
-        "arrow__rotated": rotate,
-        "arrow__disabled": disabled,
-        "arrow__hidden": hidden,
+      className={classNames(styles.wrapp, {
+        [styles.arrowRotated]: rotate,
+        [styles.arrowDisabled]: disabled,
+        [styles.arrowHidden]: hidden,
       })}
       onClick={onArrowClick}
     >
-      <div className="arrow__arrow"/>
-      <div className="arrow__body"/>
+      <div className={styles.arrow}/>
+      <div className={styles.arrowBody}/>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import React from "react";
 
+import styles from "./input.module.scss";
+
 interface InputProps {
   placeholder: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -21,7 +23,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({
         onKeyDown={onKeyDown}
         onChange={onChange}
         value={value}
-        className={classNames({ "input-error": error })}
+        className={classNames({ [styles.error]: error })}
       />
     </>
   )

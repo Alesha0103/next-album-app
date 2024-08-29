@@ -4,14 +4,16 @@ import { PhotoType } from "@/models/photos";
 import Link from "next/link";
 import { ImgWrapp } from "../img-wrapp/img-wrapp";
 
+import styles from "./photo-card.module.scss";
+
 type PhotoProps = {
   photoBody: PhotoType
 }
 
 export const PhotoCard: React.FC<PhotoProps> = ({ photoBody }) => {
   return (
-    <div className="photo-card">
-      <div className="photo-card__container">
+    <div className={styles.photoCardContainer}>
+      <div className={styles.photoCard}>
         <Link href={`/photos/${photoBody.id}`}>
           <h2>Photo with id: {photoBody.id}</h2>
         </Link>

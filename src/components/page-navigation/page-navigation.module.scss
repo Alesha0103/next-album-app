@@ -1,0 +1,39 @@
+.pageNavigation {
+  display: flex;
+  justify-content: space-between;
+  max-width: 375px;
+  margin: auto;
+  margin-top: 25px;
+  padding-bottom: 25px;
+  .pageIndicator {
+    font-size: 11px;
+    padding: 5px;
+    width: 25px;
+    height: 30px;
+    background-color: #b02c15;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+.currentPage {
+  background-color: white !important;
+  color: #b02c15 !important;
+  font-weight: 700;
+  border: 2px solid #b02c15;
+  transform: scale(1.2);
+  padding: 3px !important;
+}
+
+.rightArrow, .leftArrow {
+  width: 15px;
+  height: 15px;
+  border-right: 3px solid #b02c15;
+  border-top: 3px solid #b02c15;
+  transform: rotate(45deg);
+  margin-top: 8px;
+  cursor: pointer;
+}
+.leftArrow {
+  transform: rotate(-135deg);
+}

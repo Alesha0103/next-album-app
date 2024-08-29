@@ -1,0 +1,47 @@
+.wrapp {
+  position: relative;
+  align-self: center;
+  &:hover {
+    .arrowBody {
+      background-color: #781010;
+    }
+    .arrow {
+      border-right-color: #781010;
+    }
+  }
+  cursor: pointer;
+  .arrowBody {
+    width: 40px;
+    height: 20px;
+    background-color: #ff4b4b;
+  }
+  .arrow {
+    border-left: 15px solid transparent;
+    border-right: 20px solid #ff4b4b;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    left: -30px;
+    top: -5px;
+  }
+}
+
+.arrowRotated {
+  transform: rotate(180deg);
+}
+
+.arrowDisabled {
+  cursor: default;
+  &:hover {
+    .arrow {
+      border-right: 20px solid #ff4b4b;
+    }
+    .arrowBody {
+      background-color: #ff4b4b;
+    }
+  }
+}
+.arrowHidden {
+  cursor: default;
+  opacity: 0;
+}

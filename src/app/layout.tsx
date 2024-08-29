@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.scss";
+
+import "./globals.css";
+import styles from "./globals.module.scss";
 
 export const metadata: Metadata = {
   title: "Album App",
@@ -14,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="app-container">
+        <div className={styles.appContainer}>
           {children}
         </div>
       </body>

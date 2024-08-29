@@ -1,0 +1,79 @@
+.appContainer {
+  width: 1280px;
+  min-height: 100vh;
+  margin: auto;
+  border-left: 3px solid #b02c15;
+  border-right: 3px solid #b02c15;
+  position: relative;
+}
+
+.homePageWrapp {
+  position: absolute;
+  width: 100%;
+  top: 35vh;
+}
+
+.homePageTitle {
+  font-weight: 800;
+  color: #b02c15;
+  display: block;
+  text-align: center;
+}
+
+.homePageButton {
+  display: block;
+  color: white;
+  background-color: #b02c15;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.notFoundPage {
+  width: 50%;
+  margin: auto;
+  padding-top: 15rem;
+  h2, h3, button {
+    color: red;
+    text-align: center;
+    font-weight: 600;
+  }
+  button {
+    display: block;
+    color: white;
+    width: 150px;
+    margin: auto;
+    margin-top: 25px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #b02c15;
+  }
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.spinner {
+  border-top: 2px solid #ff4b4b;
+  border-bottom: 2px solid #ff4b4b;
+  border-radius: 50%;
+  height: 8rem;
+  width: 8rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
