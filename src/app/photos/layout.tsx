@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { Header } from "@/components/header";
-import { PageNavigation } from "@/components/page-navigation";
+import { PageNavigation } from "@/components/page-navigation/page-navigation";
+import { Header } from "@/components/header/header";
 
 export const metadata: Metadata = {
   title: "Photos",

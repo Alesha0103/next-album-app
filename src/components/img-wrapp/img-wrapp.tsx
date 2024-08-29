@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import { Loader } from "./loader";
+import { Loader } from "../loader/loader";
 import NoImage from "../../public/no-img.png";
 
 interface ImgProps {
@@ -41,3 +41,4 @@ export const ImgWrapp: React.FC<ImgProps> = ({ alt, url, width=DEFAULT_WIDTH, he
     </>
   )
 }
+// глянути midllеware, + translations 

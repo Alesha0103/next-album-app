@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { PhotoType } from "@/models/photos";
 import Link from "next/link";
-import { ImgWrapp } from "./img-wrapp";
+import { ImgWrapp } from "../img-wrapp/img-wrapp";
 
 type PhotoProps = {
   photoBody: PhotoType

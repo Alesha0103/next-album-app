@@ -1,5 +1,5 @@
 import React from 'react'
-import { Arrow } from './arrow'
+import { Arrow } from '../arrow/arrow'
 
 export const Header = () => {
   return (
