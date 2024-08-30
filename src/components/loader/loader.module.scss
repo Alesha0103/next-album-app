@@ -11,7 +11,20 @@
     border-width: 4px;
     border-style: solid;
     position: absolute;
-    bottom: 50px;
+    top: 40px;
+  }
+}
+@layer utilities {
+  .largeloader {
+    top: 125px;
+    @apply w-24 h-24 rounded-full animate-spin;
+  }
+}
+
+@layer utilities {
+  .smallLoader {
+    top: 20px;
+    @apply w-10 h-10 rounded-full animate-spin;
   }
 }
 
@@ -19,4 +32,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }

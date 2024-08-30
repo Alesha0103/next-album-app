@@ -7,6 +7,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { Loader } from "@/components/loader/loader";
 
 import styles from "../auth.module.scss";
+import classNames from "classnames";
+import { LoaderScale } from "@/models/loader-scale";
 
 const SignUp = () => {
   const [form, setForm] = React.useState<AuthForm>({
@@ -27,16 +29,16 @@ const SignUp = () => {
     passwordValid,
     secondPasswordValid,
     submitButtonLoader,
-    saveCompletedForm,
+    submitForm,
     onTyping,
   } = useAuth();
 
   const disabledSubmit = 
     !!Object.values(form).filter(value => !value).length
-    || !nameValid || !emailValid || !passwordValid || !secondPasswordValid;
+    || !nameValid || !emailValid || !passwordValid || !secondPasswordValid || submitButtonLoader;
 
-  const submitForm = async () => {
-    saveCompletedForm(form);
+  const handleSubmit = () => {
+    submitForm(form);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextInputRef: React.RefObject<HTMLInputElement> | null) => {
@@ -45,8 +47,8 @@ const SignUp = () => {
       if (nextInputRef && nextInputRef.current) {
         nextInputRef.current.focus();
       }
-      if (!nextInputRef) {
-        submitForm();
+      if (!nextInputRef && !disabledSubmit) {
+        handleSubmit();
       }
     }
   };
@@ -97,17 +99,14 @@ const SignUp = () => {
         />
 
         <div className={styles.authButtons}>
-          {submitButtonLoader ? (
-            <Loader/>
-            ) : (
-            <button
-              className={styles.authButtonSubmit}
-              onClick={submitForm}
-              disabled={disabledSubmit}
-            >
-              Submit
-            </button>
-          )}
+          {submitButtonLoader && ( <Loader loaderScale={LoaderScale.SMALL}/> )}
+          <button
+            className={classNames(styles.authButtonSubmit, {[styles.hiddenButton]: submitButtonLoader})}
+            onClick={handleSubmit}
+            disabled={disabledSubmit}
+          >
+            Submit
+          </button>
           <span>or</span>
           <button className={styles.authButtonSignin}>Sign In</button>
         </div>

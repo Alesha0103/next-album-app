@@ -3,6 +3,7 @@ import React from "react";
 import Image, { StaticImageData } from "next/image";
 import { Loader } from "../loader/loader";
 import NoImage from "../../../public/no-img.png";
+import { LoaderScale } from "@/models/loader-scale";
 
 interface ImgProps {
   alt: string,
@@ -18,6 +19,13 @@ export const ImgWrapp: React.FC<ImgProps> = ({ alt, url, width=DEFAULT_WIDTH, he
   const [ loading, setLoading ] = React.useState(true);
   const [ imgUrl, setImgUrl ] = React.useState<string | StaticImageData>(url);
 
+  const calculateLoaderSize = (): LoaderScale => {
+    if (width >= DEFAULT_WIDTH) {
+      return LoaderScale.LARGE;
+    }
+    return LoaderScale.MEDIUM;
+  }
+
   const onLoad = () => {
     setLoading(false);
   }
@@ -28,7 +36,7 @@ export const ImgWrapp: React.FC<ImgProps> = ({ alt, url, width=DEFAULT_WIDTH, he
 
   return (
     <>
-      {loading && (<Loader/>)}
+      {loading && (<Loader loaderScale={calculateLoaderSize()}/>)}
       <Image
         src={imgUrl} 
         alt={alt}

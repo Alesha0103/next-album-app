@@ -1,13 +1,17 @@
 import React from "react";
 import { AuthForm, AuthFormField } from "@/models/auth-form";
 import { testDataBase } from "../../db";
+import { useRouter } from "next/navigation";
+
+const _submitForm = (form: AuthForm) => new Promise((res, rej) => {
+  setTimeout(() => {
+    testDataBase.push({...form, id: testDataBase.length+1})
+    res(form);
+  }, 3000)
+})
 
 export const useAuth = () => {
-  const [ name, setName ] = React.useState("");
-  const [ email, setEmail ] = React.useState("");
-  const [ password, setPassword ] = React.useState("");
-  const [ secondPassword, setSecondPassword ] = React.useState("");
-
+  const router = useRouter();
   const [ nameValid, setNameValid ] = React.useState(true);
   const [ emailValid, setEmailValid ] = React.useState(true);
   const [ passwordValid, setPasswordValid ] = React.useState(true);
@@ -15,46 +19,44 @@ export const useAuth = () => {
 
   const [loading, setLoading] = React.useState(false);
 
-  const checkName = React.useCallback(() => {
-    if (name.split("").length > 3) {
-      setNameValid(true);
-    } else {
-      setNameValid(false);
-    }
-  }, [name]);
+  const _checkName = (name: string) => {
+    const checking = name.split("").length >= 3;
+    setNameValid(!!checking);
+    return !!checking;
+  }
 
-  const checkEmail = React.useCallback(() => {
+  const _checkEmail = (email: string) => {
     const checking = email
       .toLowerCase()
       .match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
-    if (!!checking) {
-      setEmailValid(true);
-    } else {
-      setEmailValid(false);
-    }
-  }, [email]);
+    setEmailValid(!!checking);
+    return !!checking;
+  }
 
-  const checkPassword = React.useCallback(() => {
+  const _checkPassword = (password: string) => {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasDigit = (password.match(/\d/g) || []).length >= 4;
     const hasMinimumLength = password.length >= 8;
-    setPasswordValid(hasUpperCase && hasDigit && hasMinimumLength);
-  }, [password]);
 
-  const checkSecondPassword = React.useCallback(() => {
-    if (!!password && !!secondPassword) {
-      setSecondPasswordValid(password === secondPassword);
-    }
-  }, [secondPassword]);
+    setPasswordValid(hasUpperCase && hasDigit && hasMinimumLength)
 
-  const saveCompletedForm = React.useCallback((form: AuthForm) => {
-    setName(form.name);
-    setEmail(form.email);
-    setPassword(form.password);
-    setSecondPassword(form.secondPassword || "");
-  }, []);
+    return (
+      hasUpperCase && hasDigit && hasMinimumLength
+    );
+  }
+
+  const _checkSecondPassword = (
+    password: string,
+    secondPassword?: string
+  ) => {
+    setSecondPasswordValid(password === secondPassword);
+
+    return (
+      password === secondPassword
+    );
+  }
 
   const onTyping = React.useCallback((type: AuthFormField) => {
     switch (type) {
@@ -75,19 +77,38 @@ export const useAuth = () => {
     }
   }, []);
 
-  const submitForm = React.useCallback(() => {}, [])
+  const submitForm = async (form: AuthForm) => {
+    let _name = form.name;
+    let _email = form.email;
+    let _password = form.password;
+    let _secondPassword = form.secondPassword;
 
-  React.useEffect(() => {
-    if (name && email && password && secondPassword) {
-      checkName();
-      checkEmail();
-      checkPassword();
-      checkSecondPassword();
+    const checkedName = _checkName(_name);
+    const checkedEmail = _checkEmail(_email);
+    const checkedPassword = _checkPassword(_password);
+    const checkedSecondPassword = _checkSecondPassword(_password, _secondPassword);
+
+    if (!checkedName || !checkedEmail || !checkedPassword || !checkedSecondPassword) {
+      return;
     }
-  }, [ name, email, password, secondPassword ]);
+
+    try {
+      setLoading(true);
+      const data = await _submitForm({
+        name: _name,
+        email: _email,
+        password: _password,
+      })
+      console.log('data', data);
+      router.replace("/photos/1");
+      setLoading(false);      
+    } catch {
+      console.log("Ain't sign up!")
+    }
+  };
 
   return {
-    saveCompletedForm,
+    submitForm,
     onTyping,
 
     nameValid,
