@@ -4,39 +4,37 @@ import { Modal } from "@/components/modal/modal";
 import { Input } from "@/components/input/input";
 import { AuthButtonType, AuthForm, AuthFormField, AuthFormPlaceholder } from "@/models/auth-form";
 import { useAuth } from "@/hooks/useAuth";
-import { AuthButtons } from "@/components/auth-buttons/auth-buttons";
+import { Loader } from "@/components/loader/loader";
 
 import styles from "../auth.module.scss";
+import classNames from "classnames";
+import { LoaderScale } from "@/models/loader-scale";
+import { AuthButtons } from "@/components/auth-buttons/auth-buttons";
 
-const SignUp = () => {
+const SignIn = () => {
   const [form, setForm] = React.useState<AuthForm>({
     [AuthFormField.NAME]: "",
-    [AuthFormField.EMAIL]: "",
     [AuthFormField.PASSWORD]: "",
-    [AuthFormField.SECOND_PASSWORD]: ""
   });
 
   const inputNameRef = React.useRef<HTMLInputElement>(null);
-  const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-  const inputSecondPasswordRef = React.useRef<HTMLInputElement>(null);
 
   const {
     nameValid,
-    emailValid,
     passwordValid,
-    secondPasswordValid,
     submitButtonLoader,
-    signUp,
+    signIn,
     onTyping,
-  } = useAuth();
+    onFocus,
+  } = useAuth(true);
 
   const disabledSubmit = 
     !!Object.values(form).filter(value => !value).length
-    || !nameValid || !emailValid || !passwordValid || !secondPasswordValid || submitButtonLoader;
+    || !nameValid || !passwordValid || submitButtonLoader;
 
   const handleSubmit = () => {
-    signUp(form);
+    signIn(form);
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextInputRef: React.RefObject<HTMLInputElement> | null) => {
@@ -62,48 +60,36 @@ const SignUp = () => {
   return (
     <Modal>
       <div className={styles.auth}>
-        <h1>Please Sign Up</h1>
+        <h1>Please Sign In</h1>
         <Input
           ref={inputNameRef}
           placeholder={AuthFormPlaceholder.NAME}
-          onKeyDown={(e) => handleKeyDown(e, inputEmailRef)}
+          onKeyDown={(e) => handleKeyDown(e, inputPasswordRef)}
           onChange={(e) => handleChange(e, AuthFormField.NAME)}
+          onFocus={onFocus}
           value={form.name}
           error={!nameValid}
-        />
-        <Input
-          ref={inputEmailRef}
-          placeholder={AuthFormPlaceholder.EMAIL}
-          onKeyDown={(e) => handleKeyDown(e, inputPasswordRef)}
-          onChange={(e) => handleChange(e, AuthFormField.EMAIL)}
-          value={form.email}
-          error={!emailValid}
+          
         />
         <Input
           ref={inputPasswordRef}
           placeholder={AuthFormPlaceholder.PASSWORD}
-          onKeyDown={(e) => handleKeyDown(e, inputSecondPasswordRef)}
+          onKeyDown={(e) => handleKeyDown(e, null)}
           onChange={(e) => handleChange(e, AuthFormField.PASSWORD)}
+          onFocus={onFocus}
           value={form.password}
           error={!passwordValid}
         />
-        <Input
-          ref={inputSecondPasswordRef}
-          placeholder={AuthFormPlaceholder.SECOND_PASSWORD}
-          onKeyDown={(e) => handleKeyDown(e, null)}
-          onChange={(e) => handleChange(e, AuthFormField.SECOND_PASSWORD)}
-          value={form.secondPassword}
-          error={!secondPasswordValid}
-        />
+        {/* <div>Acount is not found</div> */}
         <AuthButtons
           disabled={disabledSubmit}
           loader={submitButtonLoader}
           onSubmitClick={handleSubmit}
-          type={AuthButtonType.SIGN_UP}
+          type={AuthButtonType.SIGN_IN}
         />
       </div>
     </Modal>
   )
 }
 
-export default SignUp;
+export default SignIn;

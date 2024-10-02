@@ -1,4 +1,10 @@
-export const testDataBase = [
+import { AuthForm } from "@/models/auth-form";
+
+type ItemDB = AuthForm & {
+  id: number;
+};
+
+export const testDataBase: ItemDB[] = [
   {
     id: 1,
     name: "Oleksii",

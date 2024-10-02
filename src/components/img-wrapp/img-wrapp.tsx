@@ -49,4 +49,4 @@ export const ImgWrapp: React.FC<ImgProps> = ({ alt, url, width=DEFAULT_WIDTH, he
     </>
   )
 }
-// глянути midllеware, + translations 
+// глянути midllеware, + translations  

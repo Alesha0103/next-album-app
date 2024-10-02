@@ -3,21 +3,29 @@ import { AuthForm, AuthFormField } from "@/models/auth-form";
 import { testDataBase } from "../../db";
 import { useRouter } from "next/navigation";
 
-const _submitForm = (form: AuthForm) => new Promise((res, rej) => {
+const _submitSignUpForm = (form: AuthForm) => new Promise((res) => {
   setTimeout(() => {
     testDataBase.push({...form, id: testDataBase.length+1})
     res(form);
   }, 3000)
 })
 
-export const useAuth = () => {
+const _submitSignInForm = (form: AuthForm) => new Promise((res) => {
+  const name = form.name;
+  const pass = form.password;
+  setTimeout(() => {
+    const auth = testDataBase.find(user => user.name === name && user.password === pass);
+    res(!!auth);
+  }, 3000)
+})
+
+export const useAuth = (signin?: boolean) => {
   const router = useRouter();
   const [ nameValid, setNameValid ] = React.useState(true);
   const [ emailValid, setEmailValid ] = React.useState(true);
   const [ passwordValid, setPasswordValid ] = React.useState(true);
   const [ secondPasswordValid, setSecondPasswordValid ] = React.useState(true);
-
-  const [loading, setLoading] = React.useState(false);
+  const [ loading, setLoading ] = React.useState(false);
 
   const _checkName = (name: string) => {
     const checking = name.split("").length >= 3;
@@ -25,7 +33,10 @@ export const useAuth = () => {
     return !!checking;
   }
 
-  const _checkEmail = (email: string) => {
+  const _checkEmail = (email?: string) => {
+    if (!email) {
+      return false;
+    }
     const checking = email
       .toLowerCase()
       .match(
@@ -76,8 +87,17 @@ export const useAuth = () => {
         break;
     }
   }, []);
+  
+  const onFocus = () => {
+    if (signin) {
+      setNameValid(true);
+      setEmailValid(true);
+      setPasswordValid(true);
+      setSecondPasswordValid(true);
+    }
+  }
 
-  const submitForm = async (form: AuthForm) => {
+  const signUp = async (form: AuthForm) => {
     let _name = form.name;
     let _email = form.email;
     let _password = form.password;
@@ -94,7 +114,7 @@ export const useAuth = () => {
 
     try {
       setLoading(true);
-      const data = await _submitForm({
+      const data = await _submitSignUpForm({
         name: _name,
         email: _email,
         password: _password,
@@ -103,13 +123,47 @@ export const useAuth = () => {
       router.replace("/photos/1");
       setLoading(false);      
     } catch {
-      console.log("Ain't sign up!")
+      console.log("Ain't sign up!");
+      setLoading(false); 
     }
   };
 
+  const signIn = async (form: AuthForm) => {
+    let _name = form.name;
+    let _password = form.password;
+
+    const checkedName = _checkName(_name);
+    const checkedPassword = _checkPassword(_password);
+
+    if (!checkedName || !checkedPassword) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const isAuth = await _submitSignInForm({
+        name: _name,
+        password: _password,
+      })
+      if (isAuth) {
+        router.replace("/photos/1");
+      } else {
+        setNameValid(false);
+        setPasswordValid(false);
+        console.log("Name or password are incorrect!");
+      }
+      setLoading(false);   
+    } catch {
+      console.log("Something wrong happened!");
+      setLoading(false); 
+    }
+  }
+
   return {
-    submitForm,
+    signUp,
+    signIn,
     onTyping,
+    onFocus,
 
     nameValid,
     emailValid,

@@ -23,7 +23,7 @@
 
 @layer utilities {
   .smallLoader {
-    top: 20px;
+    top: 25px;
     @apply w-10 h-10 rounded-full animate-spin;
   }
 }
