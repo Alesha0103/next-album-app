@@ -3,19 +3,67 @@ import { AuthForm, AuthFormField } from "@/models/auth-form";
 import { testDataBase } from "../../db";
 import { useRouter } from "next/navigation";
 
-const _submitSignUpForm = (form: AuthForm) => new Promise((res) => {
+enum ErrorName {
+  NAME = "name",
+  EMAIL = "email",
+  NAME_EMAIL = "name_email",
+  PASSWORD = "password",
+}
+
+const _submitSignUpForm = (form: AuthForm) => new Promise((res,rej) => {
+  const name = form.name;
+  const email = form.email;
+  const userExist = !!testDataBase.find(user => user.name === name);
+  const emailExist = !!testDataBase.find(user => user.email === email);
+
+  if (userExist && email) {
+    rej({
+      name: ErrorName.NAME_EMAIL,
+      message: "This user already exists",
+    });
+  }
+
+  if (userExist) {
+    rej({
+      name: ErrorName.NAME,
+      message: "User with this name already exists. Try another name",
+    });
+  }
+
+  if (emailExist) {
+    rej({
+      name: ErrorName.EMAIL,
+      message: "User with this emeil already exists",
+    });
+  }
+
   setTimeout(() => {
     testDataBase.push({...form, id: testDataBase.length+1})
     res(form);
   }, 3000)
 })
 
-const _submitSignInForm = (form: AuthForm) => new Promise((res) => {
+const _submitSignInForm = (form: AuthForm) => new Promise((res, rej) => {
   const name = form.name;
-  const pass = form.password;
+  const password = form.password;
+
+  const userExist = testDataBase.find(user => user.name === name);
+  const passwordCorrect = userExist?.password === password;
+  if (!userExist) {
+    rej({
+      name: ErrorName.NAME,
+      message: "User with this name doesn't exist",
+    });
+  }
+  if (!passwordCorrect) {
+    rej({
+      name: ErrorName.PASSWORD,
+      message: "Wrong password",
+    });
+  }
+
   setTimeout(() => {
-    const auth = testDataBase.find(user => user.name === name && user.password === pass);
-    res(!!auth);
+    res(userExist);
   }, 3000)
 })
 
@@ -26,6 +74,8 @@ export const useAuth = (signin?: boolean) => {
   const [ passwordValid, setPasswordValid ] = React.useState(true);
   const [ secondPasswordValid, setSecondPasswordValid ] = React.useState(true);
   const [ loading, setLoading ] = React.useState(false);
+  const [ signUpError, setSignUpError ] = React.useState("");
+  const [ signInError, setSignInError ] = React.useState("");
 
   const _checkName = (name: string) => {
     const checking = name.split("").length >= 3;
@@ -70,6 +120,9 @@ export const useAuth = (signin?: boolean) => {
   }
 
   const onTyping = React.useCallback((type: AuthFormField) => {
+    setSignUpError("");
+    setSignInError("");
+
     switch (type) {
       case AuthFormField.NAME:
         setNameValid(true);
@@ -120,10 +173,21 @@ export const useAuth = (signin?: boolean) => {
         password: _password,
       })
       console.log('data', data);
+      setSignUpError("");
       router.replace("/photos/1");
       setLoading(false);      
-    } catch {
-      console.log("Ain't sign up!");
+    } catch (error: any) {
+      if (error.name === ErrorName.NAME_EMAIL) {
+        setNameValid(false);
+        setEmailValid(false);
+      }
+      if (error.name === ErrorName.NAME) {
+        setNameValid(false);
+      }
+      if (error.name === ErrorName.EMAIL) {
+        setEmailValid(false);
+      }
+      setSignUpError(error.message);
       setLoading(false); 
     }
   };
@@ -145,16 +209,24 @@ export const useAuth = (signin?: boolean) => {
         name: _name,
         password: _password,
       })
-      if (isAuth) {
-        router.replace("/photos/1");
-      } else {
-        setNameValid(false);
-        setPasswordValid(false);
-        console.log("Name or password are incorrect!");
-      }
-      setLoading(false);   
-    } catch {
-      console.log("Something wrong happened!");
+      setSignInError("");
+      router.replace("/photos/1");
+      setLoading(false);
+
+      // if (isAuth) {
+      //   setSignInError(false);
+      //   router.replace("/photos/1");
+      // } else {
+      //   setNameValid(false);
+      //   setPasswordValid(false);
+      //   setSignInError(true);
+      //   console.log("Name or password are incorrect!");
+      // }
+      // setLoading(false);   
+    } catch (error: any) {
+      setNameValid(false);
+      setPasswordValid(false);
+      setSignInError(error.message);
       setLoading(false); 
     }
   }
@@ -164,7 +236,9 @@ export const useAuth = (signin?: boolean) => {
     signIn,
     onTyping,
     onFocus,
-
+  
+    signUpError,
+    signInError,
     nameValid,
     emailValid,
     passwordValid,

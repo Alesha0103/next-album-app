@@ -24,6 +24,7 @@ const SignIn = () => {
     nameValid,
     passwordValid,
     submitButtonLoader,
+    signInError,
     signIn,
     onTyping,
     onFocus,
@@ -69,7 +70,7 @@ const SignIn = () => {
           onFocus={onFocus}
           value={form.name}
           error={!nameValid}
-          
+          authError={!!signInError}
         />
         <Input
           ref={inputPasswordRef}
@@ -79,8 +80,17 @@ const SignIn = () => {
           onFocus={onFocus}
           value={form.password}
           error={!passwordValid}
+          authError={!!signInError}
         />
-        {/* <div>Acount is not found</div> */}
+        {
+          <div className={styles.accountError}>
+            {signInError && (
+              <div className={styles.error}>
+                {signInError}
+              </div>
+            )}
+          </div>
+        }
         <AuthButtons
           disabled={disabledSubmit}
           loader={submitButtonLoader}

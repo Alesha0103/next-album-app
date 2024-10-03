@@ -35,6 +35,7 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({ loader, disabled, type
       <button
         className={styles.authSecondButton}
         onClick={changeAuthFlow}
+        disabled={!!loader}
       >
         {type === AuthButtonType.SIGN_UP ? "Sign In" : "Sign Up"}
       </button>

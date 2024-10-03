@@ -1,6 +1,6 @@
 .auth {
   width: 550px;
-  min-height: 600px;
+  min-height: 500px;
   border-radius: 5px;
   background-color: white;
   display: flex;
@@ -13,6 +13,13 @@
     margin-top: 10px;
     margin-bottom: 25px;
     color: #781010;
+  }
+
+  .accountError {
+    color: #781010;
+    text-align: center;
+    position: relative;
+    height: 30px;
   }
 }
 

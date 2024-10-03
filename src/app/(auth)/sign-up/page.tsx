@@ -27,6 +27,7 @@ const SignUp = () => {
     passwordValid,
     secondPasswordValid,
     submitButtonLoader,
+    signUpError,
     signUp,
     onTyping,
   } = useAuth();
@@ -70,6 +71,7 @@ const SignUp = () => {
           onChange={(e) => handleChange(e, AuthFormField.NAME)}
           value={form.name}
           error={!nameValid}
+          authError={!!signUpError}
         />
         <Input
           ref={inputEmailRef}
@@ -78,6 +80,7 @@ const SignUp = () => {
           onChange={(e) => handleChange(e, AuthFormField.EMAIL)}
           value={form.email}
           error={!emailValid}
+          authError={!!signUpError}
         />
         <Input
           ref={inputPasswordRef}
@@ -95,6 +98,15 @@ const SignUp = () => {
           value={form.secondPassword}
           error={!secondPasswordValid}
         />
+        {
+          <div className={styles.accountError}>
+            {signUpError && (
+              <div className={styles.error}>
+                {signUpError}
+              </div>
+            )}
+          </div>
+        }
         <AuthButtons
           disabled={disabledSubmit}
           loader={submitButtonLoader}
