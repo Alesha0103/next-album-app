@@ -1,5 +1,8 @@
+@import "../variables";
+
 .detailsPage {
-  width: 50%;
+  width: 90%;
+  height: 100vh;
   margin: auto;
   margin-top: 5rem;
   border-radius: 15px;
@@ -16,5 +19,8 @@
   }
   img {
     margin: auto;
+  }
+  @media (min-width: $small) {
+    width: 50%;
   }
 }

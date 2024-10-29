@@ -1,8 +1,19 @@
+@import "../variables";
+
 .photoPageList {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 45px;
   width: fit-content;
   margin: auto;
   padding: 25px 0;
+  @media (min-width: $small) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: $medium) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media (min-width: $largest) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }

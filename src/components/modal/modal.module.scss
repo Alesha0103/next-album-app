@@ -1,3 +1,5 @@
+@import "../../app/variables";
+
 .overlay {
   position: fixed;
   z-index: 10;
@@ -7,13 +9,12 @@
   bottom: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 2.5rem;
+  padding: 10px;
   z-index: 100;
-}
-
-.wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @media (min-width: $small) {
+    padding: 60px;
+  }
+  @media (min-width: $medium) {
+    padding: 120px;
+  }
 }

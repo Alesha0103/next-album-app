@@ -76,6 +76,7 @@ export const useAuth = (signin?: boolean) => {
   const [ loading, setLoading ] = React.useState(false);
   const [ signUpError, setSignUpError ] = React.useState("");
   const [ signInError, setSignInError ] = React.useState("");
+  const [ forgotPassError, serForgotPassError ] = React.useState("");
 
   const _checkName = (name: string) => {
     const checking = name.split("").length >= 3;
@@ -205,24 +206,13 @@ export const useAuth = (signin?: boolean) => {
 
     try {
       setLoading(true);
-      const isAuth = await _submitSignInForm({
+      await _submitSignInForm({
         name: _name,
         password: _password,
       })
       setSignInError("");
       router.replace("/photos/1");
-      setLoading(false);
-
-      // if (isAuth) {
-      //   setSignInError(false);
-      //   router.replace("/photos/1");
-      // } else {
-      //   setNameValid(false);
-      //   setPasswordValid(false);
-      //   setSignInError(true);
-      //   console.log("Name or password are incorrect!");
-      // }
-      // setLoading(false);   
+      setLoading(false); 
     } catch (error: any) {
       setNameValid(false);
       setPasswordValid(false);
@@ -231,14 +221,23 @@ export const useAuth = (signin?: boolean) => {
     }
   }
 
+  const forgotPassSubmit = async (email: string) => {
+    const checkedEmail = _checkEmail(email);
+    if (!checkedEmail) {
+      return;
+    }
+  }
+
   return {
     signUp,
     signIn,
     onTyping,
     onFocus,
+    forgotPassSubmit,
   
     signUpError,
     signInError,
+    forgotPassError,
     nameValid,
     emailValid,
     passwordValid,
